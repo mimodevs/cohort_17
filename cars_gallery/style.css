@@ -1,0 +1,46 @@
+body {
+    background: rgb(19, 19, 19);
+    color: #fff;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #353535;
+    font-size: 40px;
+    color: #fff;
+    height: 100%;
+    width: 100%;
+    border-radius: 4px; 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+ }
+
+
+.gallery {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));;
+  grid-auto-rows: 200px;
+}
+
+
+
+
+@media only screen and (min-width: 800px){
+    .wide {
+      grid-column: span 2;
+    }
+
+    .tall {
+        grid-row: span 2;
+      }
+    .ultra-wide {
+            grid-column: span 3;
+    }
+}
+
+
