@@ -1,30 +1,7 @@
-const todos = [
-    {
-      userId: 1,
-      id: 1,
-      title: "delectus aut autem",
-      completed: false,
-    },
-    {
-      userId: 1,
-      id: 2,
-      title: "quis ut nam facilis et officia qui",
-      completed: false
-    },
-    {
-      userId: 1,
-      id: 3,
-      title: "fugiat veniam minus",
-      completed: false
-    },
-    {
-      userId: 1,
-      id: 4,
-      title: "et porro tempora",
-      completed: true
-    },
-  ];
 
+
+
+// render task fucntion
 let todoUl = document.querySelector('ul');
 
 function renderTask(title, completed){
@@ -35,42 +12,52 @@ function renderTask(title, completed){
 
     todoItem.innerHTML = `
       <input type="checkbox" ${ completed ? 'checked' : '' }/>
-      <p> ${title} </p> 
+      <p> ${title} </p>
       <button class="delete-btn" >x</button>
       `;
+
     todoUl.appendChild(todoItem);
 
     let deleteBtns = document.querySelectorAll('.delete-btn');
+    let checkboxesArray = document.querySelectorAll('li > input');  // => [input, input, input, input]
 
     deleteBtns.forEach(function(oneDeleteBtn) {
-      oneDeleteBtn.onclick = function(){oneDeleteBtn.parentElement.remove() }
+      oneDeleteBtn.onclick = function(){
+        oneDeleteBtn.parentElement.remove() 
+      }
+    })
+
+    checkboxesArray.forEach((checkboxInput) => {
+
+      checkboxInput.onchange = () => {
+        if (checkboxInput.checked === true ) {
+          checkboxInput.nextElementSibling.style.textDecoration='line-through';
+          checkboxInput.parentElement.style.opacity = '0.4';
+          // checkboxInput.parentElement.style.pointerEvents = 'none';
+          return;
+        }
+        checkboxInput.nextElementSibling.style.textDecoration='none';
+      }
     })
 
   }
-
-
-for(let i = 0; i < todos.length; i++) {
-  renderTask(todos[i].title,todos[i].completed )
-}
-
-
+  
+// add new task
 let newTaskInput = document.querySelector('.new-task-input');
 let addBtn = document.querySelector('.add-btn');
 
 addBtn.onclick = function() {
-
-  todos.push(
-    {
-        userId: 1,
-        id: todos.length + 1,
-        title: newTaskInput.value, 
-        completed: false 
-    }
-  )
  renderTask(newTaskInput.value, false );
-
  newTaskInput.value = '';
-   
-
- console.log();
 }
+
+
+// fetch json api data
+fetch('https://jsonplaceholder.typicode.com/todos')
+  .then(response => response.json())
+  .then(todos => {
+  for(let i = 0; i < todos.length; i++){
+    renderTask(todos[i].title, todos[i].completed )
+  }}
+)
+
