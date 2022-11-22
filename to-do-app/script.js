@@ -1,19 +1,15 @@
-
-
-
 // render task fucntion
 let todoUl = document.querySelector('ul');
 
-function renderTask(title, completed){
-
+function renderTask(title, completed, author){
     let todoItem = document.createElement('li');
-
     todoItem.classList.add('todo'); 
 
     todoItem.innerHTML = `
       <input type="checkbox" ${ completed ? 'checked' : '' }/>
       <p> ${title} </p>
       <button class="delete-btn" >x</button>
+      <p> ${author} </p>
       `;
 
     todoUl.appendChild(todoItem);
@@ -53,11 +49,48 @@ addBtn.onclick = function() {
 
 
 // fetch json api data
-fetch('https://jsonplaceholder.typicode.com/todos')
+fetch('https://my-json-server.typicode.com/abed42/emoji-do/db')
   .then(response => response.json())
-  .then(todos => {
+  .then(data => {
+    let todos = data.todos;
   for(let i = 0; i < todos.length; i++){
-    renderTask(todos[i].title, todos[i].completed )
+    renderTask(todos[i].title, todos[i].completed, data.profile.name )
   }}
 )
+
+// https://my-json-server.typicode.com/abed42/emoji-do/todos
+  
+fetch('https://my-json-server.typicode.com/abed42/emoji-do/todos',{
+      method: 'POST', 
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        userId: 1,
+        id: 10,
+        title: "whatever new task",
+        completed: false
+      })
+    }
+)
+.then((response) => response.json())
+.then((data)=> console.log(data));
+
+
+const cars = ['toyota', 'mazda']
+
+
+
+cars.push('tesla');
+
+function greet(name) {
+  console.log('Welcome, ' + name + '!');
+  let motorbikes = ['suzuki', 'kawasaki']; 
+  if(name === 'Lucy') {
+    console.log(name = " owns a " + motorbikes[1]);
+  }
+}
+motorbikes
+
+// // greet('Lucy');
 
