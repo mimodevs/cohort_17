@@ -24,9 +24,9 @@ let body = document.body;
 
 export function getWallpaper(city) {
 
-    fetch(`https://api.unsplash.com/search/photos/?client_id=oegIivKo5Ppbo_PK_PedVXtGUYnhG7OhgagyKBFIQa0&query=${city}&per_page=10`)
+    fetch(`https://api.unsplash.com/search/photos/?client_id=oegIivKo5Ppbo_PK_PedVXtGUYnhG7OhgagyKBFIQa0&query=${city}&per_page=20`)
     .then(response => response.json())
-    .then(data => body.style.backgroundImage = `url(${data.results[Math.random().toFixed(1)*10].urls.regular})`)
+    .then(data => body.style.backgroundImage = `url(${data.results[Math.random().toFixed(1)*20].urls.regular})`)
 }
 
 // default city
